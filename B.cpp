@@ -1,3 +1,4 @@
 int f(){
-  return(88);
+  std::cout<<"cout in f()\n";
+  return(1);
 }
