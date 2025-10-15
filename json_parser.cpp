@@ -7,13 +7,26 @@
 #include <memory>
 #include <cctype>
 #include <stdexcept>
-
+//using namespace std;
 // === JSON Value Definition ===
-struct JsonValue;
 
+struct JsonValue;
 using JsonArray = std::vector<JsonValue>;
 using JsonObject = std::map<std::string, JsonValue>;
+using JsonVariant = std::variant<
+        std::nullptr_t,
+        bool,
+        double,
+        std::string,
+        JsonArray,
+        JsonObject
+    >;
 
+struct JsonValue: JsonVariant{
+    using JsonVariant::JsonVariant; // Inherit constructors
+                                    // i.e. make  JsonVariant construtors available in JsonValue scope
+};
+/*
 struct JsonValue {
     using ValueType = std::variant<
         std::nullptr_t,
@@ -33,7 +46,7 @@ struct JsonValue {
     JsonValue(const JsonArray& arr) : value(arr) {}
     JsonValue(const JsonObject& obj) : value(obj) {}
 };
-
+*/
 // === Tokenizer ===
 enum class TokenType {
     LeftBrace, RightBrace,
@@ -55,7 +68,7 @@ public:
 
     Token nextToken() {
         skipWhitespace();
-        if (pos >= str.size()) return {TokenType::End, ""};
+        if (pos >= str.size()) return {TokenType::End, std::string("")};
 
         char ch = str[pos];
         switch (ch) {
@@ -94,7 +107,7 @@ private:
         ++pos; // skip opening quote
         std::string result;
         while (pos < str.size() && str[pos] != '"') {
-            if (str[pos] == '\') {
+            if (str[pos] == '\\') {
                 ++pos;
                 if (pos < str.size()) {
                     result += str[pos]; // naive escape handling
