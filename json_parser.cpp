@@ -10,7 +10,7 @@
 //using namespace std;
 // === JSON Value Definition ===
 
-struct JsonValue;
+struct JsonValue;   // recursive definition, so forward declare first
 using JsonArray = std::vector<JsonValue>;
 using JsonObject = std::map<std::string, JsonValue>;
 using JsonVariant = std::variant<
@@ -203,6 +203,51 @@ private:
         return JsonValue(std::stod(token.value));
     }
 };
+// print variant
+struct variantOutput
+{
+	static int indent_tab;
+	/*
+	void operator()(const int& v)		{std::cout <<v << std::endl;}
+	void operator()(const bool& v)		{std::cout << v << std::endl; }
+	void operator()(const float& v)		{std::cout << v << std::endl; }
+	void operator()(const std::string& v){std::cout << v << std::endl; }
+	void operator()(JObject v)		 {for (auto& [k, j] : v)std::visit(STOutput{}, j); }
+	void operator()(const JArray& v) {for (auto& j : v)     std::visit(STOutput{}, j);}
+	*/
+	
+	template<typename TYPE>
+	void operator()(const TYPE& v)
+	{
+		std::cout <<  v ;
+	}
+	template<>
+	void operator()(const JsonObject& v) {
+		std::cout << std::endl;
+		std::cout << std::string(indent_tab, '\t') << '{';
+		++indent_tab;
+		for (auto& [k, j] : v) {
+			std::cout<<k<<" : ";
+			std::visit(variantOutput{}, j); std::cout << ",\n" << std::string(indent_tab-1, '\t');
+		}
+		std::cout << '}';
+		--indent_tab;
+	}	
+	template<>
+	void operator()(const JsonArray& v) {
+		std::cout  << '[';
+		for (auto& j : v) {
+			std::visit(variantOutput{}, j); std::cout << ',';
+		}
+		std::cout << ']';
+	}
+
+};
+int variantOutput::indent_tab = 0;	// initialize static data member
+std::ostream& operator<<(std::ostream& os, const JsonValue& j) {
+	std::visit(variantOutput{}, j); std::cout << std::endl;
+	return os;
+}
 
 // === Main ===
 int main() {
@@ -210,6 +255,10 @@ int main() {
         "name": "Steve",
         "age": 30,
         "is_student": false,
+        "address": {
+            "city": "New York",
+            "zip": "10001"
+        },
         "skills": ["C++", "Python", "JSON"],
         "details": null
     })";
@@ -218,6 +267,7 @@ int main() {
         JsonParser parser(json);
         JsonValue root = parser.parse();
         std::cout << "Parsed successfully!\n";
+        std::cout << root << std::endl;
     } catch (const std::exception& ex) {
         std::cerr << "Error: " << ex.what() << "\n";
     }
