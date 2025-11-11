@@ -33,7 +33,7 @@ string debug_rep(const string &s) { return '"' + s + '"'; }
 int main(){
     int i=0;
     cout<<debug_rep(&i)<<endl;
-    cout<<debug_rep(vector{9,8,7,6,5,});
+    cout<<debug_rep(vector{9,8,7,6,5,})<<endl;
     cout<<debug_rep(vector<string>{"1","@","#5"})<<endl;
     cout<<debug_rep(string("zxcvb"))<<endl;
 cout << debug_rep("99999")<<endl;
