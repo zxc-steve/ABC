@@ -23,17 +23,19 @@ template <typename T> string debug_rep(const T &t) {
 ostringstream ret; ret << t;return ret.str();}
 template <typename T> string debug_rep(T *p){
    ostringstream ret;ret << "pointer: " << p;
-    if (p) ret << " " << debug_rep(*p);
-    else ret << " null pointer";
+    //if (p) ret << " " << debug_rep(*p);
+    //else ret << " null pointer";
+    ret<<' '<<(p?debug_rep(*p):"null pointer");
     return ret.str();
 }
 string debug_rep(const string &s) { return '"' + s + '"'; }
-
+string debug_rep(const char *p) { return debug_rep(string(p)); }
 
 int main(){
     int i=0;
+    vector<vector<int>> v={{1,2,3},{4,5,6}};
     cout<<debug_rep(&i)<<endl;
-    cout<<debug_rep(vector{9,8,7,6,5,})<<endl;
+    cout<<debug_rep(&v)<<endl;
     cout<<debug_rep(vector<string>{"1","@","#5"})<<endl;
     cout<<debug_rep(string("zxcvb"))<<endl;
 cout << debug_rep("99999")<<endl;
