@@ -23,8 +23,9 @@ template <typename T> string debug_rep(const T &t) {
 ostringstream ret; ret << t;return ret.str();}
 template <typename T> string debug_rep(T *p){
    ostringstream ret;ret << "pointer: " << p;
-
-    tret<<' '<<(p?debug_rep(*p):"null pointer");
+    //if (p) ret << " " << debug_rep(*p);
+    //else ret << " null pointer";
+    ret<<' '<<(p?debug_rep(*p):"null pointer");
     return ret.str();
 }
 string debug_rep(const string &s) { return '"' + s + '"'; }
