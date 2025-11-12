@@ -23,7 +23,7 @@ template <typename T> string debug_rep(const T &t) {
 ostringstream ret; ret << t;return ret.str();}
 template <typename T> string debug_rep(T *p){
    ostringstream ret;ret << "pointer: " << p;
-
+// test conflict #1
     ret<<' '<<(p?debug_rep(*p):"null pointer");
     return ret.str();
 }
