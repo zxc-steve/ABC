@@ -3,6 +3,8 @@
 #include <string>
 #include<vector>
 using namespace std;
+#define qq(x) cerr << #x
+#define debug(x) std::cerr << #x << " = " <<x<<endl 
 string debug_rep(const string &s);
 template <typename T> string debug_rep(const T &t);
 template <typename T>
@@ -33,7 +35,7 @@ string debug_rep(const char *p) { return debug_rep(string(p)); }
 template <typename T> int compare(const T&, const T&){return 0;};
 template<size_t N, size_t M> 
 int compare(const char (&)[N], const char (&)[M]){return 1;};
-template <> int compare(const char* const &p1, const char* const &p2){return 2;}
+//template <> int compare(const char* const &p1, const char* const &p2){return 2;}
 int main(){
     const char *s1="111",*s2="2222";
     cout<<compare(s1,s2)<<endl ;
@@ -45,4 +47,5 @@ int main(){
     cout<<debug_rep(vector<string>{"1","@","#5"})<<endl;
     cout<<debug_rep(string("zxcvb"))<<endl;
 cout << debug_rep("99999")<<endl;
+debug(v);
 }
