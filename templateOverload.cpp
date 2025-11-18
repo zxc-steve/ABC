@@ -41,7 +41,7 @@ int main(){
     cout<<compare(s1,s2)<<endl ;
     cout<<compare("111","2222")<<endl;
     int i=0;
-    vector<vector<int>> v={{1,2,3},{4,5,6}},*vp=0;
+    vector<vector<int>> v={{1,2,3},{4,5,6}},*vp=v;
     cout<<debug_rep(&i)<<endl;
     cout<<debug_rep(&v)<<endl;
     cout<<debug_rep(vp)<<endl;
