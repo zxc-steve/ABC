@@ -33,10 +33,10 @@ template <typename T> string debug_rep(T *p){
 string debug_rep(const string &s) { return '"' + s + '"'; }
 string debug_rep(const char *p) { return debug_rep(string(p)); }
 template <typename T, typename... Args> string debug_rep(const T &t, const Args&... rest) {
-    string ret=debug_rep(t);
-    if(sizeof...(rest)) ret+=',';
-    ret+=debug_rep(rest...);
-    return ret;
+    return(debug_rep(t)+','+debug_rep(rest...));
+    //if(sizeof...(rest)) ret+=',';
+    //ret+=debug_rep(rest...);
+    //return ret;
 }
 template <typename T> int compare(const T&, const T&){return 0;};
 template<size_t N, size_t M> 
