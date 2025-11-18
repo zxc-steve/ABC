@@ -4,7 +4,8 @@
 #include<vector>
 using namespace std;
 #define qq(x) cerr << #x
-//#define debug(x) std::cerr << #x << " = " <<x<<endl 
+// simple and useful
+//#define debug(x) std::cerr << #x << " = " <<x<<endl
 #define debug(x...) std::cerr<<__FILE__<<":"<<__LINE__<<endl \
     << #x << " = " <<debug_rep(x)<<endl
 string debug_rep(const string &s);
@@ -35,9 +36,6 @@ string debug_rep(const string &s) { return '"' + s + '"'; }
 string debug_rep(const char *p) { return debug_rep(string(p)); }
 template <typename T, typename... Args> string debug_rep(const T &t, const Args&... rest) {
     return(debug_rep(t)+','+debug_rep(rest...));
-    //if(sizeof...(rest)) ret+=',';
-    //ret+=debug_rep(rest...);
-    //return ret;
 }
 template <typename T> int compare(const T&, const T&){return 0;};
 template<size_t N, size_t M> 
@@ -54,6 +52,5 @@ int main(){
     cout<<debug_rep(vp)<<endl;
     cout<<debug_rep(vector<string>{"1","@","#5"})<<endl;
     cout<<debug_rep(string("zxcvb"))<<endl;
-//cout << debug_rep("99999")<<endl;
 debug(vp,v);debug(v);
 }
