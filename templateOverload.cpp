@@ -4,7 +4,8 @@
 #include<vector>
 using namespace std;
 #define qq(x) cerr << #x
-#define debug(x) std::cerr << #x << " = " <<x<<endl 
+//#define debug(x) std::cerr << #x << " = " <<x<<endl 
+#define debug(x...) std::cerr << #x << " = " <<debug_rep(x)<<endl
 string debug_rep(const string &s);
 template <typename T> string debug_rep(const T &t);
 template <typename T>
@@ -31,7 +32,12 @@ template <typename T> string debug_rep(T *p){
 }
 string debug_rep(const string &s) { return '"' + s + '"'; }
 string debug_rep(const char *p) { return debug_rep(string(p)); }
-
+template <typename T, typename... Args> string debug_rep(const T &t, const Args&... rest) {
+    string ret=debug_rep(t);
+    if(sizeof...(rest)) ret+=',';
+    ret+=debug_rep(rest...);
+    return ret;
+}
 template <typename T> int compare(const T&, const T&){return 0;};
 template<size_t N, size_t M> 
 int compare(const char (&)[N], const char (&)[M]){return 1;};
@@ -42,11 +48,11 @@ int main(){
     cout<<compare("111","2222")<<endl;
     int i=0;
     vector<vector<int>> v={{1,2,3},{4,5,6}},*vp=&v;
-    cout<<debug_rep(&i)<<endl;
+    cout<<debug_rep(s2)<<endl;
     cout<<debug_rep(&v)<<endl;
     cout<<debug_rep(vp)<<endl;
     cout<<debug_rep(vector<string>{"1","@","#5"})<<endl;
     cout<<debug_rep(string("zxcvb"))<<endl;
-cout << debug_rep("99999")<<endl;
-debug(v);
+//cout << debug_rep("99999")<<endl;
+debug(vp,v);debug(v);
 }
