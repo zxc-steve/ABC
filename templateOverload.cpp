@@ -5,7 +5,7 @@
 using namespace std;
 #define qq(x) cerr << #x
 //#define debug(x) std::cerr << #x << " = " <<x<<endl 
-#define debug(x...) std::cerr << #x << " = " <<debug_rep(x)<<endl
+#define debug(x...) std::cerr<<__FILE__<<":"<<__LINE__<<endl << #x << " = " <<debug_rep(x)<<endl
 string debug_rep(const string &s);
 template <typename T> string debug_rep(const T &t);
 template <typename T>
