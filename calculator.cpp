@@ -15,7 +15,7 @@ public:
     void putback(Token t);
 private:
     bool full = false;
-    Token buffer;
+    Token buffer{0};
 };
 
 void Token_stream::putback(Token t)
