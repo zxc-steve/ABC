@@ -1,7 +1,9 @@
 //#include "PPP.h"
 #include <iostream>
+#include <stdexcept>
 using namespace std;
-
+[[noreturn]] inline void error(const std::string& s)	// error() simply disguises throws
+	{	throw std::runtime_error(s);	}
 class Token {
 public:
     char kind;
@@ -49,7 +51,7 @@ Token Token_stream::get()
         return Token{ '8' ,val }; 
     }
     default:
-        cerr << "";//error("Bad token");
+        error("Bad token");
     }
 }
 
@@ -65,13 +67,13 @@ double primary()
         double d = expression();
         t = ts.get();
         if (t.kind != ')')
-            cerr << "";//error("')' expected");
+            error("')' expected");
         return d;
     }
     case '8': // we use ’8’ to represent a number
         return t.value; // return the number’s value
     default:
-        cerr << "";//error("primary expected");
+        error("primary expected");
     }
 }
 double term()
@@ -88,7 +90,7 @@ double term()
         {
             double d = primary();
             if (d == 0)
-                cerr << "";//error("divide by zero");
+                error("divide by zero");
             left /= d;
             t = ts.get();
             break;
