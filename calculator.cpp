@@ -23,7 +23,7 @@ private:
 void Token_stream::putback(Token t)
 {
     if (full)
-        cerr << "";//error("putback() into a full buffer");
+        error("putback() into a full buffer");
     buffer = t;
     full = true;
 }
@@ -35,7 +35,7 @@ Token Token_stream::get()
     }
     char ch = 0;
     if (!(cin >> ch))
-        cerr << "";//error("no input");
+        error("no input");
     switch (ch) {
     case ';': // for "print"
     case 'q': // for "quit"
