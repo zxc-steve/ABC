@@ -108,13 +108,13 @@ double get_value(string s) // return the value of the Variable named s
         if (v.name == s)    return v.value;
     error("trying to read undeﬁned variable ", s);
 }
-void set_value(string s, double d) // set the Variable named s to d
+double set_value(string s, double d) // set the Variable named s to d
 {
     for (Variable &v : var_table)
         if (v.name == s)
         {
             v.value = d;
-            return;
+            return d;
         }
     error("trying to write undeﬁned variable ", s);
 }
@@ -171,7 +171,7 @@ double primary()
         case NAME:
             return get_value(t.name);
         default:
-            error("primary expected");
+            error("primary expected",string(1,t.kind));
         }
     }
     double term()
@@ -239,6 +239,11 @@ double primary()
         {
         case LET:
             return declaration();
+        case NAME:{
+            auto d=ts.get();
+            if(d.kind != '=') error("variable assignment fail");
+            return set_value(t.name,expression());
+        }
         default:
             ts.putback(t);
             return expression();
