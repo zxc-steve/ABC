@@ -4,7 +4,6 @@
 using namespace std;
 [[noreturn]] inline void error(const std::string& s)	// error() simply disguises throws
 	{	throw std::runtime_error(s);	}
-enum:char { PRINT = ';', QUIT = 'q', NUMBER = '8',PROMPT='>',RESULT='=' }; // token kinds  
 class Token {
 public:
     char kind;
@@ -16,7 +15,6 @@ class Token_stream {
 public:
     Token get();
     void putback(Token t);
-    void ignore(char c);
 private:
     bool full = false;
     Token buffer{0};
@@ -39,10 +37,10 @@ Token Token_stream::get()
     if (!(cin >> ch))
         error("no input");
     switch (ch) {
-    case PRINT: // for "print"
-    case QUIT: // for "quit"
+    case ';': // for "print"
+    case 'q': // for "quit"
     case '(': case ')': 
-    case '+': case '-': case '*': case '/': case '%':
+    case '+': case '-': case '*': case '/':
         return Token{ ch };
     case '.':
     case '0': case '1': case '2': case '3': case '4':
@@ -51,7 +49,7 @@ Token Token_stream::get()
         cin.putback(ch); 
         double val = 0;
         cin >> val;
-        return Token{ NUMBER ,val }; 
+        return Token{ '8' ,val }; 
     }
     default:
         error("Bad token");
@@ -73,10 +71,8 @@ double primary()
             error("')' expected");
         return d;
     }
-    case NUMBER:           // we use ’8’ to represent a number
+    case '8': // we use ’8’ to represent a number
         return t.value; // return the number’s value
-    case '-':   return - primary();
-    case '+':   return   primary();
     default:
         error("primary expected");
     }
@@ -97,14 +93,6 @@ double term()
             if (d == 0)
                 error("divide by zero");
             left /= d;
-            t = ts.get();
-            break;
-        }
-        case '%':
-        {
-            double d = primary();
-            if (d == 0)  error("%:divide by zero");
-            left = left-d*int(left/d);
             t = ts.get();
             break;
         }
@@ -134,21 +122,20 @@ double expression()
         }
     }
 }
-void calculate(){
-    while (cin) {
-        cout << PROMPT;
-        Token t = ts.get();
-        while (t.kind == PRINT)   t = ts.get();// eat ’;’
 
-        if (t.kind == QUIT)  return;
-        ts.putback(t);
-        cout << RESULT << expression() << '\n';
-    }   
-}
 int main()
 {   try
     {
-        calculate();
+        while (cin)
+        {
+            cout << "> ";
+            Token t = ts.get();
+            while (t.kind == ';')   t = ts.get();// eat ’;’
+
+            if (t.kind == 'q')  return 0;
+            ts.putback(t);
+            cout << "= " << expression() << '\n';
+        }
         return 0;
     }
     catch (exception &e)
