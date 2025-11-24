@@ -239,11 +239,12 @@ double primary()
         {
         case LET:
             return declaration();
+        /*
         case NAME:{
             auto d=ts.get();
             if(d.kind != '=') error("variable assignment fail");
             return set_value(t.name,expression());
-        }
+        }*/
         default:
             ts.putback(t);
             return expression();
