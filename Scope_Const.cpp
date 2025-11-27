@@ -71,6 +71,11 @@ void testRLref(){
     string s=std::move(rr);
     debug(s);debug(rr);
     debug(i);debug(rri);
+    debug(sizeof (rr));debug(sizeof(rri));
+    debug(sizeof (s));debug(sizeof(i));
+    int &ri=i;
+    string &rs=s;
+    debug(sizeof (rs));debug(sizeof(ri));
 }   
 int main() {
     testScope();
