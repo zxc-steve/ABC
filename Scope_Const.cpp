@@ -1,4 +1,5 @@
 #include <iostream> 
+#include <vector>
 using namespace std;
 #define debug(x) cout<<#x<<"="<<x<<endl;    
 int x=11;
@@ -45,8 +46,36 @@ void testConst() {
     cc.f().f1(); // Calls const version
     //cc.f().f2(); // Calls const version
 }
+class Ref{
+    public:
+    void push_back(const Ref&){cout<<"const Ref&"<<endl;};  
+    void push_back(Ref&&){cout<<" Ref&&"<<endl;};
+    const Ref& f()const{return *this;}
+};
+void testRef(){
+    Ref r;
+    Ref& r1=r   ;
+    r.push_back(r1); 
+    r.push_back(Ref()); 
+    r.push_back(Ref().f());
+    //
+    vector v={1,2,3,4,5};
+    int t=10;
+    v.push_back(t);
+    v.push_back(6);
+}
+void testRLref(){
+    string&& rr="hello  world   ";
+    int &&rri=1;
+    int i=std::move(rri);
+    string s=std::move(rr);
+    debug(s);debug(rr);
+    debug(i);debug(rri);
+}   
 int main() {
     testScope();
     testConst();
+    testRef();
+    testRLref();
     return 0;
 };
