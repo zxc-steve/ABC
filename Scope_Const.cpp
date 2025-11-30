@@ -12,11 +12,17 @@ struct Scope{
         debug(::x);
         debug(Scope::x)
     }
+    int& operator[](int index){
+        return x;
+    }
 };
 int testScope() {
     Scope s{22};
     s.f(33);
     cout << s.Scope::x<< endl;
+    debug(s[0]);
+    cout<<s.operator[](1)<<endl;
+    cout<<s.Scope::operator[](1)<<endl;
     return 0;
 }
 class Const{
@@ -62,7 +68,7 @@ void testRef(){
     vector v={1,2,3,4,5};
     int t=10;
     v.push_back(t);
-    v.push_back(6);
+    v.push_back(6);;
 }
 void testRLref(){
     string&& rr="hello  world   ";
