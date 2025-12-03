@@ -6,11 +6,11 @@ class Base{ //Class with Pure Virtuals Are Abstract Base Class
     public:
     virtual void print()=0;
 };   
-class X: public Base{
+class X{
     public:
     int x;
     string s;
-    void print() override {cout << "X: " << x << ", " << s << endl;}
+    virtual void print()  {cout << "X: " << x << ", " << s << endl;}
     X()=default;
     //X(): x(0), s("") {}
     X(int x, string s): x(x), s(s) {}   
@@ -48,11 +48,11 @@ int main() {
     Y y{20, "Hello from Y"};
     Z z(30, "Hello from Z");
     Z a;    
-    Base* ptr = &x;ptr->print();
-    ptr = &y;ptr->print();
-    ptr = &z;ptr->print();
+    X* ptr = &x;    ptr->print();
+    ptr = &y;       ptr->print();
+    ptr = &z;       ptr->print();
 
-    vector<Base*> contents={&x, &y, &z}; 
+    vector<X*> contents={&x, &y, &z}; 
     for(auto b: contents){
         b->print();
     }
