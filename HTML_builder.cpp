@@ -34,24 +34,25 @@ constexpr char htmlA[] = "a" ;
 constexpr char htmlLi[] = "li" ;
 constexpr char htmlP[] = "p" ;
 
-using h1 = htmlTag<htmlH1>;
+using H1 = htmlTag<htmlH1>;
 using Div = htmlTag<htmlDiv>;
-using span = htmlTag<htmlSpan>; 
-using body = htmlTag<htmlBody>;
-using html = htmlTag<htmlHtml>;
-using head = htmlTag<htmlHead>;
-using a = htmlTag<htmlA>;
-using li = htmlTag<htmlLi>;
-using p = htmlTag<htmlP>;
+using Span = htmlTag<htmlSpan>; 
+using Body = htmlTag<htmlBody>;
+using Html = htmlTag<htmlHtml>;
+using Head = htmlTag<htmlHead>;
+using A = htmlTag<htmlA>;
+using Li = htmlTag<htmlLi>;
+using P = htmlTag<htmlP>;
 
 int main() {
-    h1 header{"Welcome to My Website", " - Enjoy your stay!"};
+    H1 header{"Welcome to My Website", " - Enjoy your stay!"};
     Div container{"<p>This is a sample paragraph inside a div.</p>",};
-    a a1{"Click here to visit example.com"};
+    A a1{"Click here to visit example.com"};
     a1.setAttribute("href", "https://www.example.com");
-    span highlight{"This text is highlighted."};
-    body pageBody{header, container, highlight,a1};
-    html fullPage{pageBody};
+    Span highlight{"This text is highlighted."};
+    Body pageBody{header, container, highlight,a1};
+    Html fullPage{pageBody}; // Just to show multiple contents
     cout << string(fullPage) << endl;
+
     return 0;
 }   
