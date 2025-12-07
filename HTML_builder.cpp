@@ -53,6 +53,8 @@ int main() {
     Body pageBody{header, container, highlight,a1};
     Html fullPage{pageBody}; // Just to show multiple contents
     cout << string(fullPage) << endl;
-
+    // test map output
+    map<string, string> testMap = {{"key1", "value1"}, {"key2", "value2"}};
+    cout << testMap << endl;
     return 0;
 }   
