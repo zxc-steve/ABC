@@ -4,6 +4,7 @@
 #include <map>
 using namespace std;
 #define debug(x) cout<<#x<<"="<<(x)<<endl;
+#define debugFunc(x) cout<<#x<<"=\t";x;
 template<typename T>
 ostream& operator<<(ostream& os, vector<T>& obj) { 
     for ( const auto& x : obj) os << x << " "; return os; }
