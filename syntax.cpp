@@ -25,15 +25,15 @@ void test_pointer() {
     debug(pv1); debug(pv2); debug(pv3); debug(pv4);
     debug(pv2 - pv1); debug(pv4 - pv1);debug(pv4 - p3);
 }
-void f1(int&a){cout<<"int&a ";debug(a);}
-void f1(const int&a){cout<<"const int&a ";debug(a);}
-void f1(int&&a){cout<<"int&&a ";debug(a);}
+template<class T> T f1(T&a){cout<<"T&a ";           return a;}
+template<class T> T f1(const T&a){cout<<"const T&a ";return a;}
+template<class T> T f1(T&&a){cout<<"T&&a ";          return a;}
 void test_literal_ref(){
     int i=9;
     const int ci=7;
-    f1(i);f1(i+1);f1(8);debugFunc(f1(ci));
-    f1(static_cast<const int&>(i));
-    debugFunc(f1(static_cast<const int&>(3)));
+    debug(f1(i));debug(f1(i+1));debug(f1(8));debug(f1(ci));
+    debug(f1(static_cast<const int&>(i)));
+    debug(f1(static_cast<const int&>(3)));
 }
 int main() {
     /*string a,b,*ap=&a,*bp=&b,*cp=new string("abc");
