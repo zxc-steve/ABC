@@ -237,12 +237,12 @@ void test_fstreams() {
     inOut.seekp(0, fstream::end); 
     inOut << "\n";
 }
-void test_fstreams_app() {  // app mode is simpler than ate mode
+void test_fstreams_app() {  // app+ate mode is simpler
     system("cp copyOut.1 copyOut");
     system("cat copyOut");
-    fstream inOut("copyOut", fstream::app | fstream::in| fstream::out);
+    fstream inOut("copyOut", fstream::app | fstream::in| fstream::ate);
     if (!inOut) {cerr << "Error opening file!" << endl;return;}
-    inOut.seekg(0, fstream::end);  //app not at end when opened
+    //inOut.seekg(0, fstream::end);  //app not at end when opened
     auto end_mark = inOut.tellg();// remember original end-of-file position 
     inOut.seekg(0, fstream::beg); // reposition to the start of the file 
     size_t cnt = 0; // accumulator for the byte count 
