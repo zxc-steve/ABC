@@ -91,7 +91,7 @@ void test_move(vec v){
 }
 int main(){
     auto a={1,2,3};
-    vec v(a);debug(v);
+    const vec v(a);debug(v);
     //test_vec();
     //test_move(vec(1)+vec(2));
     vector<vec> vv;
