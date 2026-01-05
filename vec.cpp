@@ -1,10 +1,10 @@
 #include "My.h"
 
 class vec{
-    using IL=std::initializer_list<int>;
     int *data=nullptr;
     int size;
 public:
+    using IL=std::initializer_list<int>;
     vec(int size=0):size(size){
         data=new int[size];
         for(int i=0;i<size;i++){data[i]=9;}
@@ -92,9 +92,11 @@ void test_vec(){
 void test_move(vec v){
     debug(v);
 }
+using IL1=vector<int>::iterator;
 int main(){
     auto a={1,2,3};
-    const vec v(a);cout<<v[0];
+    vec::IL x={4,5,6,7};
+    const vec v{a};cout<<v[0];
     //cout<<(vec{4,5,6}[0])<<endl;
     //test_vec();
     //test_move(vec(1)+vec(2));
