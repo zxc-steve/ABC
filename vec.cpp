@@ -48,6 +48,9 @@ public:
     int& operator[](const int index){
         return data[index];
     }
+    const int& operator[](const int index) const{
+        return data[index];
+    }
     vec operator+(const vec& other){
         vec v(size+other.size);
         for(int i=0;i<size;i++){
@@ -91,7 +94,8 @@ void test_move(vec v){
 }
 int main(){
     auto a={1,2,3};
-    const vec v(a);debug(v);
+    const vec v(a);cout<<v[0];
+    //cout<<(vec{4,5,6}[0])<<endl;
     //test_vec();
     //test_move(vec(1)+vec(2));
     vector<vec> vv;
