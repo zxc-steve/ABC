@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
+#include <bitset>
 void test_chrono() {    
     using namespace std::chrono;
     //using namespace std::chrono_literals::chrono_literals;
@@ -260,6 +261,121 @@ void test_fstreams_app() {  // app+ate mode is simpler
     inOut.close();
     system("cat copyOut");
 }
+void test_bit() {
+    unsigned char a = 0b00001111;
+    unsigned char b = 0b11110000;
+    debug(a & b);
+    debug(a | b);
+    debug(a ^ b);
+    debug(~a);
+    debug(a << 2);
+    debug(b >> 2);
+    debug(std::bitset<8>(a));
+    debug(std::bitset<8>(b));
+    debug(std::bitset<8>(a & b));
+    debug(std::bitset<8>(a | b));
+    debug(std::bitset<8>(a ^ b));
+    debug(std::bitset<8>(~a));
+    debug(std::bitset<8>(a << 2));
+    debug(std::bitset<8>(b >> 2));
+}
+void test_bit_float(){
+    unsigned int* p;
+    float f=1<<4;
+    debug(f=(1<<0))
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<0)+0.5)
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<1)+0.5)
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<2)+0.25)
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<0));f=-f;
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<0)+0.5);f=-f;
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<1)+0.5);f=-f;
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+    debug(f=(1<<2)+0.25);f=-f;
+    p=reinterpret_cast<unsigned int*>(&f);debug(std::bitset<32>(*p));
+}
+void test_type_conversion() {
+    int a[100];
+    auto b=a; // b is of type int*
+    debug(b);   
+}   
+void test_virtual_inheritance1() {
+    class Base {
+    public:
+        int get() { return 11; }   
+        virtual void show() { cout << "Base class show function called." << endl; }
+        virtual ~Base() = default; // Virtual destructor for proper cleanup
+    };
+
+    class Derived : public Base {
+    public:
+        int d=0;
+        int get() { return d; }
+        virtual void show() override { 
+            cout << "Derived class show function called." << endl; }
+    };
+    Derived d=Derived();
+    Base b;
+    Base* bptr = &d;    //bptr->show(); debug(bptr->get());
+    bptr = new Derived();//bptr->show(); debug(bptr->get());   
+    //Derived* p=&d;      p->show(); debug(p->get());
+    //Base &r=d;          r.show(); debug(r.get());
+    //Base &r1=b;         r1.show(); debug(r1.get());
+    vector<Base*> vb={new Derived(),new Base()  };
+    for(auto &item:vb) {
+        item->show();
+        debug(item->get());
+    }
+    for(auto &item:vb) {
+        delete item;
+    }
+}
+void test_virtual_inheritance() {
+    class Base {
+    public:
+        int get() { return 11; }   
+        virtual void show() { cout << "Base class show function called." << endl; }
+        virtual ~Base() = default; // Virtual destructor for proper cleanup
+    };
+
+    class Derived : public Base {
+    public:
+        int d=0;
+        int get() { return d; }
+        void show() override { 
+            cout << "Derived class show function called." << endl; }
+    };
+    Derived d=Derived();debug(d.get());
+    Base a=d;           debug(a.get());
+    Base* bptr = new Derived();
+    Derived* bptr1 = new Derived[5];
+    for(int i=0;i<5;i++) {
+        //(bptr1+i)->d=i+1;
+        //(*(bptr1+i)).d=i+1;
+        bptr1[i].d++;
+    }
+    for(int i=0;i<5;i++) {
+        debug(bptr1[i].get());
+    }
+    bptr->show(); // Should call Derived's show()
+    debug(bptr->get()); // Calls Base's get() due to static binding
+    //bptr=&a;bptr->show();
+    //bptr=&d;bptr->show();
+    delete[] bptr1;
+    delete bptr;
+     //Properly deletes Derived object
+}
+void test_pointers(){
+    int i[]={10,20,30,40,50};
+    int* p= new int[]{1,2,3,4,5};
+    debug(*p);
+    delete p;
+}
 int main() {
     /*string a,b,*ap=&a,*bp=&b,*cp=new string("abc");
     auto q=bp+(ap-bp)/2;
@@ -278,6 +394,11 @@ int main() {
     //test_enumerate();
     //test_stream();
     //test_io_manip();
-    test_fstreams_app();
+    //test_fstreams_app();
+    //test_bit();
+    //test_bit_float();
+    test_virtual_inheritance1();
+    //test_pointers();
+    //test_type_conversion();
     return 0;
 }

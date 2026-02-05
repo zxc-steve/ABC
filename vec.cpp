@@ -94,6 +94,7 @@ void test_move(vec v){
 }
 using IL1=vector<int>::iterator;
 int main(){
+    int* b=new int[4]{4,3,4,6};
     auto a={1,2,3};
     vec::IL x={4,5,6,7};
     const vec v{a};cout<<v[0];
@@ -107,5 +108,11 @@ int main(){
     //debug(vv[0]);
     //debug(vv[1]);
     //debug(vv[2]);
-    
+    string s=u8"中文";
+    cout<<s<<":";debug(s.size());debug(sizeof(s));
+    s=string(u8"中文文字大小");
+    cout<<s<<":";debug(s.size());debug(sizeof(s));
+    for(auto& c:s){
+        cout<<c<<endl;
+    }
 }
