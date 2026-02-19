@@ -6,6 +6,7 @@
 #include <thread>
 #include <fstream>
 #include <bitset>
+#include <set>
 void test_chrono() {    
     using namespace std::chrono;
     //using namespace std::chrono_literals::chrono_literals;
@@ -376,6 +377,46 @@ void test_pointers(){
     debug(*p);
     delete p;
 }
+void test_multiple_inheritance() {
+    class Base1 {
+    public:
+    int i=0;
+        void show() { cout << "Base1 class show function called." << endl; }
+    };
+
+    class Base2 {
+    public:
+        int i=1;
+        void show() { cout << "Base2 class show function called." << endl; }
+    };
+
+    class Derived : public Base1, public Base2 {
+    public:
+        int i=2;
+        void show() { cout << "Derived class show function called." << endl; }
+    };
+
+    Derived d;
+    d.show(); // Calls Derived's show()
+
+    // To call Base1's show
+    d.Base1::show();
+
+    // To call Base2's show
+    d.Base2::show();
+    Base1* b1ptr = &d;
+    Base2* b2ptr = &d;
+    cout<<b1ptr<<','<<b2ptr<<','<<&d<<endl  ;
+}
+struct MultiSet{int a; ostream& operator<<(ostream& os) const { return os << a; }  };
+bool operator<(const MultiSet& lhs, const MultiSet& rhs) { return lhs.a < rhs.a; }  
+void test_multiset() {
+    multiset<MultiSet> ms = {{1}, {2}, {3},{1}};  
+    for (auto& s : ms) {
+        cout << s.a << " ";
+    }
+    cout << endl;
+}   
 int main() {
     /*string a,b,*ap=&a,*bp=&b,*cp=new string("abc");
     auto q=bp+(ap-bp)/2;
@@ -397,8 +438,9 @@ int main() {
     //test_fstreams_app();
     //test_bit();
     //test_bit_float();
-    test_virtual_inheritance1();
+    //test_virtual_inheritance1();
     //test_pointers();
     //test_type_conversion();
+    test_multiset();
     return 0;
 }
