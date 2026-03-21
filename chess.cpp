@@ -9,7 +9,7 @@ using namespace std;
 struct Chess;
 
 struct Chess{
-const static int SZ = 8;
+const static int SZ = 6;
     int board[SZ][SZ]{{0}};
     //int cnt = 0;    
     int steps[8][2]={{-2,-1},{-2,1},{-1,-2},{-1,2},{1,-2},{1,2},{2,-1},{2,1}};
