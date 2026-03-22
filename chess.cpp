@@ -9,7 +9,7 @@ using namespace std;
 struct Chess;
 
 struct Chess{
-const static int SZ = 8;
+const static int SZ = 5;
     int board[SZ][SZ]{{0}};
     int solutionCnt = 0;    
     int steps[8][2]={{-2,-1},{-2,1},{-1,-2},{-1,2},{1,-2},{1,2},{2,-1},{2,1}};
@@ -27,7 +27,7 @@ ostream& operator<<(ostream & os,const Chess& c){
 bool Chess::move(int x,int y,int cnt){
         if(x<0||x>=SZ||y<0||y>=SZ||board[x][y]) return false;
         board[x][y] = cnt;
-        cout<<"cnt="<<cnt<<endl<<*this<<endl;
+        //cout<<"cnt="<<cnt<<endl<<*this<<endl;
         if(cnt==SZ*SZ) {cout<<"Solution found:"<<++solutionCnt<<endl; cout<<*this;}
         else for(int i=0;i<8;i++) move(x+steps[i][0],y+steps[i][1],cnt+1);
         board[x][y] = 0; // Backtrack
